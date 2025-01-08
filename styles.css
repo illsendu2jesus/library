@@ -1,0 +1,30 @@
+body{
+    display: grid;
+
+}
+.header{
+    display: grid;
+    background-color: #797a7c;
+    place-items: center;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(200px,6fr));
+    gap:20px;
+    place-items: cent;
+}
+
+
+.card{
+    height:300px;
+    border:2px solid black;
+   display: grid;
+   border-radius: 5px;
+
+}
+
+.fav{
+    width:200px;
+    height:100px;
+}
