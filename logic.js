@@ -55,23 +55,61 @@ function displayBooks(title, author, pages, read){
     let buttons = document.createElement('div');
     buttons.classList.add('buttons');
 
+    //couldn't add an Event Listener later beacuse buttons are dynamically created as a result there are not yet present on the page so the NOde list stays empty,thus I should ttach them here
+
     let like = document.createElement('button');
     like.classList.add('fav');
-    like.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>cards-heart</title><path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" /></svg>'
+    like.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>cards-heart</title><path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" /></svg>';
+    like.addEventListener('click',()=>{
+        //console.log(like.parentElement.parentElement.id);
+        let path = like.querySelector('path');
+        manageFavorites(like.parentElement.parentElement.id, path);
 
+    })
+
+
+    let remove = document.createElement('button');
+    remove.classList.add("remove");
+    remove.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>window-close</title><path d="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z" /></svg>';
+    remove.addEventListener('click',()=>{
+        console.log(remove.parentElement.parentElement.id);
+    })
+
+    let change = document.createElement('button');
+    change.classList.add('change');
+    change.textContent = 'Change Read Status';
+    change.addEventListener('click',()=>{
+        console.log(change.parentElement.parentElement.id);
+    })
+    
 
     info.appendChild(titulo);
     info.appendChild(autora);
     info.appendChild(paginas);
     info.appendChild(leido);
 
+    buttons.appendChild(change);
     buttons.appendChild(like);
+    buttons.appendChild(remove);
 
     card.appendChild(info);
     card.appendChild(buttons);
 
     shelf.appendChild(card);
 
+}
+
+function manageFavorites(index,btn){
+    // when I tried asssing the val below to var it made a copy and hence wouldn't change the real val
+    books[index].fav = books[index].fav == false ? true : false;
+
+    if(books[index].fav){
+        btn.style.fill='red';
+    }
+
+    else{
+        btn.style.fill='inherit';
+    }
 }
 
 let add = document.querySelector('.add');
