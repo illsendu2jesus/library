@@ -10,6 +10,10 @@ function Book(title,author,pages,read){
     this.fav  = false;
 }
 
+Book.prototype.updateRead = function(newVal){
+    this.read = newVal;
+}
+
 function addBookToArray(book){
     
 
@@ -21,6 +25,8 @@ function addBookToArray(book){
 
     // Add the new book to the books array
     books.push(newBook);
+
+    //console.log(books);
 
     displayBooks(title, author, pages, read);
 
@@ -56,6 +62,8 @@ function displayBooks(title, author, pages, read){
     buttons.classList.add('buttons');
 
     //couldn't add an Event Listener later beacuse buttons are dynamically created as a result there are not yet present on the page so the NOde list stays empty,thus I should ttach them here
+    // Event Dlegation is another useful method to do so ,maybe better
+
 
     let like = document.createElement('button');
     like.classList.add('fav');
@@ -72,14 +80,17 @@ function displayBooks(title, author, pages, read){
     remove.classList.add("remove");
     remove.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>window-close</title><path d="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z" /></svg>';
     remove.addEventListener('click',()=>{
-        console.log(remove.parentElement.parentElement.id);
+        //console.log(remove.parentElement.parentElement);
+        //shelf.removeChild(remove.parentElement.parentElement);
+        deleteBook(shelf, remove.parentElement.parentElement);
     })
 
     let change = document.createElement('button');
     change.classList.add('change');
     change.textContent = 'Change Read Status';
     change.addEventListener('click',()=>{
-        console.log(change.parentElement.parentElement.id);
+        //console.log(change.parentElement.parentElement.id);
+        changeReadStatus(change);
     })
     
 
@@ -111,6 +122,35 @@ function manageFavorites(index,btn){
         btn.style.fill='inherit';
     }
 }
+
+function deleteBook(parent,book){
+    let idx = book.id;
+    books.splice(idx,1);
+    parent.removeChild(book);
+    //console.log(books);
+}
+
+function changeReadStatus(btn){
+    let state = btn.parentElement.parentElement.querySelector('.info').children[3];
+    let content = state.textContent;
+    
+    if (content[5] === 'R') {
+      content = 'Read:Currently reading'; // This modifies the string, not the DOM
+      state.textContent = content; // Update the DOM element's textContent
+    }
+    else if(content[5] === 'C'){
+        content = 'Read:Not read';
+        state.textContent = content;
+    }
+    else{
+        content = 'Read:Read';
+        state.textContent = content;
+    }
+
+    books[btn.parentElement.parentElement.id].updateRead(content)
+    //console.log(books);
+}
+
 
 let add = document.querySelector('.add');
 let dialog = document.querySelector('dialog')
