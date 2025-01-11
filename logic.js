@@ -178,3 +178,6 @@ submit.addEventListener('click',(e)=>{
     dialog.close([title.value, author.value, pages.value, read.value]);
 })
 
+if(books.length==0){
+    console.log('er');
+}
