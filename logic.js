@@ -155,6 +155,7 @@ function changeReadStatus(btn){
 let add = document.querySelector('.add');
 let dialog = document.querySelector('dialog')
 let submit = document.querySelector('.submit');
+let cancel = document.querySelector('.cancel');
 
 let title = document.getElementById('title')
 let author = document.getElementById('author');
@@ -169,7 +170,11 @@ add.addEventListener('click',()=>{
 
 dialog.addEventListener('close',()=>{
     let book = dialog.returnValue.split(',');
-    addBookToArray(book);
+
+    //console.log(book,book.length)
+    if(book.length>1){ 
+        addBookToArray(book);
+    }
 })
 
 
@@ -178,6 +183,8 @@ submit.addEventListener('click',(e)=>{
     dialog.close([title.value, author.value, pages.value, read.value]);
 })
 
-if(books.length==0){
-    console.log('er');
-}
+cancel.addEventListener('click',(e)=>{
+
+    e.preventDefault();
+    dialog.close([]);
+})
