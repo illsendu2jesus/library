@@ -2,17 +2,27 @@
 
 const books = [];
 
-function Book(title,author,pages,read){
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.fav  = false;
+
+class Book{
+    constructor(title,author,pages,read){
+        this.title = title;
+        this.author  =author;
+        this.pages = pages;
+        this.read = read;
+    }
+
+    updateRead(newVal){
+        this.read = newVal;
+    }
 }
 
-Book.prototype.updateRead = function(newVal){
+
+
+
+
+/*Book.prototype.updateRead = function(newVal){
     this.read = newVal;
-}
+}*/
 
 function addBookToArray(book){
     
